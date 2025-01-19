@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sakura Chore Tracker</title>
   <style>
+    /* General Styles */
+    @keyframes glitter {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #fde8f0;
@@ -24,11 +31,13 @@
       justify-content: center;
       max-width: 1000px;
       width: 100%;
-      background-color: #fff;
+      background: linear-gradient(135deg, #fde8f0, #ffe6f7, #fde8f0);
       border-radius: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       padding: 20px;
       border: 4px solid #f8c1d6;
+      animation: glitter 3s ease infinite;
+      background-size: 200% 200%;
     }
 
     h1 {
@@ -64,6 +73,7 @@
       color: #d63384;
       font-weight: 600;
       text-align: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     }
 
     .chore-list {
@@ -91,6 +101,7 @@
       transition: background-color 0.3s, color 0.3s;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       font-weight: bold;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
 
     .chore-list button.completed {
@@ -103,7 +114,11 @@
       color: #fff;
     }
 
-    .laundry-toggle {
+    .laundry-section {
+      width: 100%;
+    }
+
+    .laundry-title {
       font-size: 1.2rem;
       font-weight: bold;
       background-color: #d63384;
@@ -113,24 +128,28 @@
       border-radius: 12px;
       cursor: pointer;
       margin-bottom: 10px;
-      display: block;
-      width: 100%;
+      text-align: center;
       transition: background-color 0.3s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
-    .laundry-toggle:hover {
+    .laundry-title:hover {
       background-color: #b82c6e;
     }
 
     .subtasks {
-      margin-left: 15px;
       margin-top: 10px;
       display: none;
+      background-color: #fde8f0;
+      border: 2px solid #f8c1d6;
+      border-radius: 10px;
+      padding: 10px;
     }
 
     .subtasks button {
       padding: 8px;
       font-size: 0.95rem;
+      margin-bottom: 5px;
     }
 
     .refresh-note {
@@ -155,13 +174,13 @@
           <li><button onclick="toggleTask(this)">Clean Kitchen Counters</button></li>
           <li><button onclick="toggleTask(this)">Vacuum</button></li>
           <li><button onclick="toggleTask(this)">Clean Puppy Accidents</button></li>
-          <li>
-            <button class="laundry-toggle" onclick="toggleSubtasks(this)">Laundry ▼</button>
-            <ul class="subtasks">
-              <li><button onclick="toggleTask(this)">Run Laundry</button></li>
-              <li><button onclick="toggleTask(this)">Fold Laundry</button></li>
-              <li><button onclick="toggleTask(this)">Put Away Laundry</button></li>
-            </ul>
+          <li class="laundry-section">
+            <button class="laundry-title" onclick="toggleSubtasks(this)">Laundry ▼</button>
+            <div class="subtasks">
+              <button onclick="toggleTask(this)">Run Laundry</button>
+              <button onclick="toggleTask(this)">Fold Laundry</button>
+              <button onclick="toggleTask(this)">Put Away Laundry</button>
+            </div>
           </li>
         </ul>
       </div>
@@ -199,48 +218,15 @@
       button.classList.toggle("completed");
     }
 
-    // Refresh daily, weekly, and monthly sections
-    const refreshIntervals = {
-      daily: 24 * 60 * 60 * 1000, // 1 day
-      weekly: 7 * 24 * 60 * 60 * 1000, // 1 week
-      monthly: 30 * 24 * 60 * 60 * 1000, // 1 month
-    };
-
-    const refreshChores = () => {
-      const now = new Date();
-      const lastRefresh = JSON.parse(localStorage.getItem("choreRefresh")) || {};
-
-      // Refresh daily chores
-      if (!lastRefresh.daily || now - new Date(lastRefresh.daily) > refreshIntervals.daily) {
-        document.querySelectorAll("#daily-tasks button").forEach((button) => button.classList.remove("completed"));
-        lastRefresh.daily = now;
-      }
-
-      // Refresh weekly chores
-      if (!lastRefresh.weekly || now - new Date(lastRefresh.weekly) > refreshIntervals.weekly) {
-        document.querySelectorAll("#weekly-tasks button").forEach((button) => button.classList.remove("completed"));
-        lastRefresh.weekly = now;
-      }
-
-      // Refresh monthly chores
-      if (!lastRefresh.monthly || now - new Date(lastRefresh.monthly) > refreshIntervals.monthly) {
-        document.querySelectorAll("#monthly-tasks button").forEach((button) => button.classList.remove("completed"));
-        lastRefresh.monthly = now;
-      }
-
-      localStorage.setItem("choreRefresh", JSON.stringify(lastRefresh));
-    };
-
     // Function to toggle subtasks
-    const toggleSubtasks = (element) => {
-      const subtasks = element.nextElementSibling;
+    function toggleSubtasks(button) {
+      const subtasks = button.nextElementSibling;
       const isExpanded = subtasks.style.display === "block";
       subtasks.style.display = isExpanded ? "none" : "block";
-      element.textContent = isExpanded ? "Laundry ▼" : "Laundry ▲";
-    };
-
-    refreshChores();
+      button.textContent = isExpanded ? "Laundry ▼" : "Laundry ▲";
+    }
   </script>
 </body>
 </html>
+
 
