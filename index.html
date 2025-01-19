@@ -3,180 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chore Chart</title>
+  <title>Chore Chart Widget</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #ffe6f2;
+      background-color: #fde8f0;
+      color: #333;
       margin: 0;
-      padding: 10px;
+      padding: 20px;
     }
 
-    .chart-container {
-      max-width: 700px;
+    .chore-chart {
+      width: 100%;
+      max-width: 800px;
       margin: 0 auto;
-      padding: 15px;
       background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
     }
 
-    .title {
-      font-size: 20px;
-      font-weight: bold;
+    h1 {
+      font-size: 1.8rem;
       text-align: center;
       color: #d63384;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .section {
-      margin-top: 15px;
+      margin-bottom: 20px;
     }
 
     .section-title {
-      font-size: 16px;
-      margin-bottom: 8px;
-      color: #ff69b4;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #d63384;
     }
 
-    .task-list {
+    .chore-list {
       list-style: none;
       padding: 0;
-      margin: 0;
     }
 
-    .task {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px;
-      border: 1px solid #f2f2f2;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      background-color: #ffe6f2;
-      font-size: 14px;
+    .chore-list li {
+      margin-bottom: 10px;
     }
 
-    .task.completed {
-      background-color: #d1e7dd;
-    }
-
-    .task label {
-      flex-grow: 1;
+    .chore-list button {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      background-color: #f8d7e0;
+      border: 1px solid #d63384;
+      border-radius: 5px;
       cursor: pointer;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    .task input[type="checkbox"] {
-      margin-right: 8px;
-    }
-
-    .reset-buttons {
-      display: flex;
-      justify-content: center;
-      margin-top: 15px;
-    }
-
-    .reset-buttons button {
-      margin: 0 8px;
-      padding: 8px 16px;
-      background-color: #ff69b4;
+    .chore-list button.completed {
+      background-color: #d63384;
       color: #fff;
+    }
+
+    .chore-list button:hover {
+      background-color: #d63384;
+      color: #fff;
+    }
+
+    .laundry-toggle {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+      background-color: #d63384;
+      color: #fff;
+      padding: 12px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 14px;
+      margin-bottom: 10px;
+      display: block;
+      width: 100%;
     }
 
-    .reset-buttons button:hover {
-      background-color: #d63384;
+    .laundry-toggle:hover {
+      background-color: #b82c6e;
+    }
+
+    .subtasks {
+      margin-left: 20px;
+      display: none;
     }
   </style>
 </head>
 <body>
-  <div class="chart-container">
-    <div class="title">Chore Chart</div>
+  <div class="chore-chart">
+    <h1>Chore Chart</h1>
 
-    <!-- Daily Chores Section -->
-    <div class="section" id="daily-chores">
-      <div class="section-title">Daily Chores</div>
-      <ul class="task-list">
-        <li class="task"><input type="checkbox" id="dishes"><label for="dishes">Do the dishes</label></li>
-        <li class="task"><input type="checkbox" id="vacuum"><label for="vacuum">Vacuum the house</label></li>
-        <li class="task"><input type="checkbox" id="laundry-master"><label for="laundry-master">Laundry (Master Bedroom)</label></li>
-        <li class="task"><input type="checkbox" id="laundry-kyle"><label for="laundry-kyle">Laundry (Upstairs Bathroom)</label></li>
-        <li class="task"><input type="checkbox" id="laundry-twins"><label for="laundry-twins">Laundry (Twins' Room)</label></li>
-        <li class="task"><input type="checkbox" id="puppy-cleanup"><label for="puppy-cleanup">Clean up after puppy</label></li>
+    <!-- Daily Chores -->
+    <div class="section">
+      <h2 class="section-title">Daily Tasks</h2>
+      <ul class="chore-list" id="daily-tasks">
+        <li><button onclick="toggleTask(this)">Dishes</button></li>
+        <li><button onclick="toggleTask(this)">Clean Kitchen Counters</button></li>
+        <li><button onclick="toggleTask(this)">Vacuum</button></li>
+        <li><button onclick="toggleTask(this)">Clean Puppy Accidents</button></li>
+        <li>
+          <button class="laundry-toggle" onclick="toggleSubtasks(this)">Laundry ▼</button>
+          <ul class="subtasks">
+            <li><button onclick="toggleTask(this)">Run Laundry</button></li>
+            <li><button onclick="toggleTask(this)">Fold Laundry</button></li>
+            <li><button onclick="toggleTask(this)">Put Away Laundry</button></li>
+          </ul>
+        </li>
       </ul>
     </div>
 
-    <!-- Weekly Chores Section -->
-    <div class="section" id="weekly-chores">
-      <div class="section-title">Weekly Chores</div>
-      <ul class="task-list">
-        <li class="task"><input type="checkbox" id="trash"><label for="trash">Take out the trash (Wednesday Night)</label></li>
-        <li class="task"><input type="checkbox" id="clean-bathrooms"><label for="clean-bathrooms">Clean the bathrooms</label></li>
-        <li class="task"><input type="checkbox" id="grocery-shopping"><label for="grocery-shopping">Grocery shopping</label></li>
-        <li class="task"><input type="checkbox" id="dust-furniture"><label for="dust-furniture">Dust the furniture</label></li>
+    <!-- Weekly Chores -->
+    <div class="section">
+      <h2 class="section-title">Weekly Tasks</h2>
+      <ul class="chore-list" id="weekly-tasks">
+        <li><button onclick="toggleTask(this)">Trash Night (Wednesday)</button></li>
+        <li><button onclick="toggleTask(this)">Clean Bathrooms</button></li>
+        <li><button onclick="toggleTask(this)">Change Bedsheets</button></li>
+        <li><button onclick="toggleTask(this)">Mop Floors</button></li>
       </ul>
     </div>
 
-    <!-- Monthly Chores Section -->
-    <div class="section" id="monthly-chores">
-      <div class="section-title">Monthly Chores</div>
-      <ul class="task-list">
-        <li class="task"><input type="checkbox" id="deep-clean-kitchen"><label for="deep-clean-kitchen">Deep clean the kitchen</label></li>
-        <li class="task"><input type="checkbox" id="garage-organize"><label for="garage-organize">Organize the garage</label></li>
-        <li class="task"><input type="checkbox" id="wash-windows"><label for="wash-windows">Wash windows</label></li>
-        <li class="task"><input type="checkbox" id="clean-out-closets"><label for="clean-out-closets">Clean out closets</label></li>
+    <!-- Monthly Chores -->
+    <div class="section">
+      <h2 class="section-title">Monthly Tasks</h2>
+      <ul class="chore-list" id="monthly-tasks">
+        <li><button onclick="toggleTask(this)">Clean Windows</button></li>
+        <li><button onclick="toggleTask(this)">Deep Clean Fridge</button></li>
+        <li><button onclick="toggleTask(this)">Organize Closets</button></li>
       </ul>
-    </div>
-
-    <!-- Reset Buttons -->
-    <div class="reset-buttons">
-      <button onclick="resetTasks('daily')">Reset Daily</button>
-      <button onclick="resetTasks('weekly')">Reset Weekly</button>
-      <button onclick="resetTasks('monthly')">Reset Monthly</button>
     </div>
   </div>
 
   <script>
-    const saveProgress = () => {
-      const tasks = document.querySelectorAll('.task input[type="checkbox"]');
-      const taskStates = {};
-      tasks.forEach(task => taskStates[task.id] = task.checked);
-      localStorage.setItem('choreProgress', JSON.stringify(taskStates));
+    // Function to toggle task completion
+    function toggleTask(button) {
+      button.classList.toggle("completed");
+    }
+
+    // Refresh daily, weekly, and monthly sections
+    const refreshIntervals = {
+      daily: 24 * 60 * 60 * 1000, // 1 day
+      weekly: 7 * 24 * 60 * 60 * 1000, // 1 week
+      monthly: 30 * 24 * 60 * 60 * 1000, // 1 month
     };
 
-    const loadProgress = () => {
-      const taskStates = JSON.parse(localStorage.getItem('choreProgress')) || {};
-      const tasks = document.querySelectorAll('.task input[type="checkbox"]');
-      tasks.forEach(task => {
-        task.checked = taskStates[task.id] || false;
-        if (task.checked) {
-          task.closest('.task').classList.add('completed');
-        }
-      });
+    const refreshChores = () => {
+      const now = new Date();
+      const lastRefresh = JSON.parse(localStorage.getItem("choreRefresh")) || {};
+
+      // Refresh daily chores
+      if (!lastRefresh.daily || now - new Date(lastRefresh.daily) > refreshIntervals.daily) {
+        document.querySelectorAll("#daily-tasks button").forEach((button) => button.classList.remove("completed"));
+        lastRefresh.daily = now;
+      }
+
+      // Refresh weekly chores
+      if (!lastRefresh.weekly || now - new Date(lastRefresh.weekly) > refreshIntervals.weekly) {
+        document.querySelectorAll("#weekly-tasks button").forEach((button) => button.classList.remove("completed"));
+        lastRefresh.weekly = now;
+      }
+
+      // Refresh monthly chores
+      if (!lastRefresh.monthly || now - new Date(lastRefresh.monthly) > refreshIntervals.monthly) {
+        document.querySelectorAll("#monthly-tasks button").forEach((button) => button.classList.remove("completed"));
+        lastRefresh.monthly = now;
+      }
+
+      localStorage.setItem("choreRefresh", JSON.stringify(lastRefresh));
     };
 
-    const resetTasks = (category) => {
-      const tasks = document.querySelectorAll(`#${category}-chores .task input[type="checkbox"]`);
-      tasks.forEach(task => {
-        task.checked = false;
-        task.closest('.task').classList.remove('completed');
-      });
-      saveProgress();
+    // Function to toggle subtasks
+    const toggleSubtasks = (element) => {
+      const subtasks = element.nextElementSibling;
+      const isExpanded = subtasks.style.display === "block";
+      subtasks.style.display = isExpanded ? "none" : "block";
+      element.textContent = isExpanded ? "Laundry ▼" : "Laundry ▲";
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadProgress();
-      const tasks = document.querySelectorAll('.task input[type="checkbox"]');
-      tasks.forEach(task => {
-        task.addEventListener('change', () => {
-          task.closest('.task').classList.toggle('completed', task.checked);
-          saveProgress();
-        });
-      });
-    });
+    refreshChores();
   </script>
 </body>
 </html>
