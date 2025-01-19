@@ -6,38 +6,51 @@
   <title>Chore Chart Widget</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       background-color: #fde8f0;
       color: #333;
       margin: 0;
       padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
     .chore-chart {
       width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
+      max-width: 750px;
       background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px 25px;
+      overflow: hidden;
+      border: 4px solid #f8c1d6;
     }
 
     h1 {
-      font-size: 1.8rem;
+      font-size: 2rem;
       text-align: center;
       color: #d63384;
       margin-bottom: 20px;
+      font-weight: bold;
     }
 
     .section {
       margin-bottom: 20px;
+      border: 2px solid #f8c1d6;
+      border-radius: 15px;
+      padding: 15px;
+      background: #fef6fa;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .section-title {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       margin-bottom: 10px;
       color: #d63384;
+      text-align: center;
+      font-weight: 600;
     }
 
     .chore-list {
@@ -47,18 +60,23 @@
 
     .chore-list li {
       margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .chore-list button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       font-size: 1rem;
       background-color: #f8d7e0;
-      border: 1px solid #d63384;
-      border-radius: 5px;
+      border: 2px solid #d63384;
+      border-radius: 12px;
       cursor: pointer;
       color: #333;
       transition: background-color 0.3s, color 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      font-weight: bold;
     }
 
     .chore-list button.completed {
@@ -77,13 +95,14 @@
       text-align: center;
       background-color: #d63384;
       color: #fff;
-      padding: 12px;
+      padding: 14px;
       border: none;
-      border-radius: 5px;
+      border-radius: 12px;
       cursor: pointer;
       margin-bottom: 10px;
       display: block;
       width: 100%;
+      transition: background-color 0.3s;
     }
 
     .laundry-toggle:hover {
@@ -91,14 +110,28 @@
     }
 
     .subtasks {
-      margin-left: 20px;
+      margin-left: 15px;
+      margin-top: 10px;
       display: none;
+    }
+
+    .subtasks button {
+      padding: 10px;
+      font-size: 0.95rem;
+    }
+
+    .refresh-note {
+      font-size: 0.85rem;
+      text-align: center;
+      color: #666;
+      margin-top: 10px;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
   <div class="chore-chart">
-    <h1>Chore Chart</h1>
+    <h1>Sakura Chore Tracker 🌸</h1>
 
     <!-- Daily Chores -->
     <div class="section">
@@ -138,6 +171,10 @@
         <li><button onclick="toggleTask(this)">Deep Clean Fridge</button></li>
         <li><button onclick="toggleTask(this)">Organize Closets</button></li>
       </ul>
+    </div>
+
+    <div class="refresh-note">
+      Tasks reset daily, weekly, and monthly to keep you on track! 🌸
     </div>
   </div>
 
@@ -191,3 +228,4 @@
   </script>
 </body>
 </html>
+
