@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chore Chart Widget</title>
+  <title>Sakura Chore Tracker</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -18,44 +18,58 @@
     }
 
     .chore-chart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 1000px;
       width: 100%;
-      max-width: 750px;
       background-color: #fff;
       border-radius: 20px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      padding: 20px 25px;
-      overflow: hidden;
+      padding: 20px;
       border: 4px solid #f8c1d6;
     }
 
     h1 {
       font-size: 2rem;
-      text-align: center;
       color: #d63384;
       margin-bottom: 20px;
       font-weight: bold;
+      text-align: center;
+    }
+
+    .sections {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      gap: 15px;
     }
 
     .section {
-      margin-bottom: 20px;
+      flex: 1;
       border: 2px solid #f8c1d6;
       border-radius: 15px;
       padding: 15px;
       background: #fef6fa;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .section-title {
       font-size: 1.5rem;
       margin-bottom: 10px;
       color: #d63384;
-      text-align: center;
       font-weight: 600;
+      text-align: center;
     }
 
     .chore-list {
       list-style: none;
       padding: 0;
+      width: 100%;
     }
 
     .chore-list li {
@@ -67,7 +81,7 @@
 
     .chore-list button {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       font-size: 1rem;
       background-color: #f8d7e0;
       border: 2px solid #d63384;
@@ -92,10 +106,9 @@
     .laundry-toggle {
       font-size: 1.2rem;
       font-weight: bold;
-      text-align: center;
       background-color: #d63384;
       color: #fff;
-      padding: 14px;
+      padding: 10px;
       border: none;
       border-radius: 12px;
       cursor: pointer;
@@ -116,7 +129,7 @@
     }
 
     .subtasks button {
-      padding: 10px;
+      padding: 8px;
       font-size: 0.95rem;
     }
 
@@ -133,44 +146,46 @@
   <div class="chore-chart">
     <h1>Sakura Chore Tracker 🌸</h1>
 
-    <!-- Daily Chores -->
-    <div class="section">
-      <h2 class="section-title">Daily Tasks</h2>
-      <ul class="chore-list" id="daily-tasks">
-        <li><button onclick="toggleTask(this)">Dishes</button></li>
-        <li><button onclick="toggleTask(this)">Clean Kitchen Counters</button></li>
-        <li><button onclick="toggleTask(this)">Vacuum</button></li>
-        <li><button onclick="toggleTask(this)">Clean Puppy Accidents</button></li>
-        <li>
-          <button class="laundry-toggle" onclick="toggleSubtasks(this)">Laundry ▼</button>
-          <ul class="subtasks">
-            <li><button onclick="toggleTask(this)">Run Laundry</button></li>
-            <li><button onclick="toggleTask(this)">Fold Laundry</button></li>
-            <li><button onclick="toggleTask(this)">Put Away Laundry</button></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+    <div class="sections">
+      <!-- Daily Chores -->
+      <div class="section">
+        <h2 class="section-title">Daily Tasks</h2>
+        <ul class="chore-list" id="daily-tasks">
+          <li><button onclick="toggleTask(this)">Dishes</button></li>
+          <li><button onclick="toggleTask(this)">Clean Kitchen Counters</button></li>
+          <li><button onclick="toggleTask(this)">Vacuum</button></li>
+          <li><button onclick="toggleTask(this)">Clean Puppy Accidents</button></li>
+          <li>
+            <button class="laundry-toggle" onclick="toggleSubtasks(this)">Laundry ▼</button>
+            <ul class="subtasks">
+              <li><button onclick="toggleTask(this)">Run Laundry</button></li>
+              <li><button onclick="toggleTask(this)">Fold Laundry</button></li>
+              <li><button onclick="toggleTask(this)">Put Away Laundry</button></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
 
-    <!-- Weekly Chores -->
-    <div class="section">
-      <h2 class="section-title">Weekly Tasks</h2>
-      <ul class="chore-list" id="weekly-tasks">
-        <li><button onclick="toggleTask(this)">Trash Night (Wednesday)</button></li>
-        <li><button onclick="toggleTask(this)">Clean Bathrooms</button></li>
-        <li><button onclick="toggleTask(this)">Change Bedsheets</button></li>
-        <li><button onclick="toggleTask(this)">Mop Floors</button></li>
-      </ul>
-    </div>
+      <!-- Weekly Chores -->
+      <div class="section">
+        <h2 class="section-title">Weekly Tasks</h2>
+        <ul class="chore-list" id="weekly-tasks">
+          <li><button onclick="toggleTask(this)">Trash Night (Wednesday)</button></li>
+          <li><button onclick="toggleTask(this)">Clean Bathrooms</button></li>
+          <li><button onclick="toggleTask(this)">Change Bedsheets</button></li>
+          <li><button onclick="toggleTask(this)">Mop Floors</button></li>
+        </ul>
+      </div>
 
-    <!-- Monthly Chores -->
-    <div class="section">
-      <h2 class="section-title">Monthly Tasks</h2>
-      <ul class="chore-list" id="monthly-tasks">
-        <li><button onclick="toggleTask(this)">Clean Windows</button></li>
-        <li><button onclick="toggleTask(this)">Deep Clean Fridge</button></li>
-        <li><button onclick="toggleTask(this)">Organize Closets</button></li>
-      </ul>
+      <!-- Monthly Chores -->
+      <div class="section">
+        <h2 class="section-title">Monthly Tasks</h2>
+        <ul class="chore-list" id="monthly-tasks">
+          <li><button onclick="toggleTask(this)">Clean Windows</button></li>
+          <li><button onclick="toggleTask(this)">Deep Clean Fridge</button></li>
+          <li><button onclick="toggleTask(this)">Organize Closets</button></li>
+        </ul>
+      </div>
     </div>
 
     <div class="refresh-note">
