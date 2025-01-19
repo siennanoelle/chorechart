@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chore Chart</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #ffe6f2;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chore-chart {
+      width: 80%;
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .chore-chart h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #d63384;
+    }
+
+    .chore {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 15px 0;
+      padding: 10px;
+      border: 1px solid #d63384;
+      border-radius: 10px;
+      background-color: #fff5fa;
+    }
+
+    .chore input[type="checkbox"] {
+      transform: scale(1.5);
+    }
+
+    .chore-name {
+      flex: 1;
+      font-size: 1.2rem;
+      text-align: left;
+      margin-left: 10px;
+    }
+
+    .progress-bar {
+      flex: 2;
+      margin-left: 10px;
+      height: 15px;
+      background-color: #f8d7e0;
+      border-radius: 7px;
+      overflow: hidden;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      background-color: #d63384;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    button {
+      background-color: #d63384;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #b72a6c;
+    }
+  </style>
+</head>
+<body>
+  <div class="chore-chart">
+    <h1>Weekly Chore Tracker</h1>
+    <div id="chores">
+      <!-- Chores will be dynamically added here -->
+    </div>
+    <button onclick="resetChores()">Reset Progress</button>
+  </div>
+
+  <script>
+    // List of chores
+    const chores = [
+      { name: "Clean the kitchen", completed: 0 },
+      { name: "Do the laundry", completed: 0 },
+      { name: "Vacuum the house", completed: 0 },
+      { name: "Water the plants", completed: 0 },
+      { name: "Take out the trash", completed: 0 }
+    ];
+
+    const choreContainer = document.getElementById("chores");
+
+    // Function to render the chores
+    function renderChores() {
+      choreContainer.innerHTML = "";
+      chores.forEach((chore, index) => {
+        const choreElement = document.createElement("div");
+        choreElement.className = "chore";
+
+        // Chore checkbox
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = chore.completed === 100;
+        checkbox.onchange = () => toggleChore(index);
+
+        // Chore name
+        const choreName = document.createElement("div");
+        choreName.className = "chore-name";
+        choreName.textContent = chore.name;
+
+        // Progress bar
+        const progressBar = document.createElement("div");
+        progressBar.className = "progress-bar";
+        const progressBarInner = document.createElement("div");
+        progressBarInner.className = "progress-bar-inner";
+        progressBarInner.style.width = `${chore.completed}%`;
+        progressBar.appendChild(progressBarInner);
+
+        // Append elements to chore
+        choreElement.appendChild(checkbox);
+        choreElement.appendChild(choreName);
+        choreElement.appendChild(progressBar);
+        choreContainer.appendChild(choreElement);
+      });
+    }
+
+    // Toggle chore completion
+    function toggleChore(index) {
+      chores[index].completed = chores[index].completed === 0 ? 100 : 0;
+      renderChores();
+    }
+
+    // Reset all chores
+    function resetChores() {
+      chores.forEach((chore) => (chore.completed = 0));
+      renderChores();
+    }
+
+    // Initial render
+    renderChores();
+  </script>
+</body>
+</html>
